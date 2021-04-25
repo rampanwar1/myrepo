@@ -12,7 +12,7 @@ pipeline {
                 script {
                       def scannerHome = tool 'LocalSonarQubeScanner';
                       withSonarQubeEnv('LocalSonarQubeScanner') {
-                       sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=webelight_practical_test-qa-sonar -Dsonar.sources=./src"
+                       sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=webelight_practical_test-qa-sonar -Dsonar.sources=./config"
                     }
                 }
             }
