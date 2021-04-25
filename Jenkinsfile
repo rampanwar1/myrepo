@@ -49,7 +49,7 @@ pipeline {
         }
         stage('Kubernetes Deploy') {
             steps{
-                sh 'helm --kubeconfig=config upgrade -i  webelight_practical_test-$BRANCH_NAME -n local-server webelight_practical_test-$BRANCH_NAME/ --set image.tag=$BRANCH_NAME-$BUILD_NUMBER'
+                sh 'helm --kubeconfig=config upgrade -i  webelight_practical_test-$BRANCH_NAME -n task webelight_practical_test-$BRANCH_NAME/ --set image.tag=$BRANCH_NAME-$BUILD_NUMBER'
             }
         }
         stage('Workspace Cleanup') {
