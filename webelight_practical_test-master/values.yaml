@@ -1,0 +1,28 @@
+# Default values for mono.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+#Name
+name: webelight_practical_test
+
+#Replicas
+replicaCount: 1
+
+#Images
+image:
+  repository: ramp110397/webelight_practical_test
+  tag: a-------------------------------9
+  pullPolicy: Always
+
+#ImageSecrets:
+imagePullSecrets:
+        - name: dockerregistry
+
+#Resources
+Resources:
+  enabled: false
+  resources:
+    requests:
+      cpu: 512m
+    limits:
+      cpu: 512m
