@@ -52,11 +52,12 @@ pipeline {
                 sh 'helm --kubeconfig=config upgrade -i  webelight_practical_test-$BRANCH_NAME -n local-server webelight_practical_test-$BRANCH_NAME/ --set image.tag=$BRANCH_NAME-$BUILD_NUMBER'
             }
         }
-        cleanup {
-            echo "Clean up in post work space"
-            cleanWs()
-            
+       stage('Workspace Cleanup') {
+            steps{
+                cleanWs()
+              }
+ 
         }
-    }
+    }   
 }
 
