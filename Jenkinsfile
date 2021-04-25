@@ -17,11 +17,12 @@ pipeline {
                 }
             }
         }
+    stages {
         stage('Building Dockerimage') {
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
-                        dockerImage = docker.build registry + ":$BRANCH_NAME-$BUILD_NUMBER"
+                        dockerImage = docker.build (registry + ":webelight_practical_test-$Cluster-$BUILD_NUMBER" , "-f $dockerfile .")
                     }
                 }
             }
@@ -37,7 +38,7 @@ pipeline {
         }
         stage('Remove Unused Dockerimage') {
             steps{
-                sh "docker rmi $registry:$BRANCH_NAME-$BUILD_NUMBER"
+                sh "docker rmi $registry:paradise-$Cluster-$BUILD_NUMBER"
            }
         }
         stage('Secrets Copy') {
@@ -49,15 +50,14 @@ pipeline {
         }
         stage('Kubernetes Deploy') {
             steps{
-                sh 'helm --kubeconfig=config upgrade -i  webelight_practical_test-$BRANCH_NAME -n local-server webelight_practical_test-$BRANCH_NAME/ --set image.tag=$BRANCH_NAME-$BUILD_NUMBER'
+                sh "cat 'webelight_practical_test.yaml' | sed 's/{{TAG}}/paradise-$Cluster-$BUILD_NUMBER/g' | kubectl --kubeconfig=config apply -n $namespace -f -"
             }
         }
         stage('Workspace Cleanup') {
             steps{
                 cleanWs()
-              }
- 
+            }
         }
-    }   
+    }
 }
 
